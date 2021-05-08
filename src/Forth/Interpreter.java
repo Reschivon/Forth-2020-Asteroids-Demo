@@ -320,7 +320,7 @@ public class Interpreter {
 		});
 		declarePrimitive("switch-thread", state ->{
 			// so the current user thread will never end
-			// while the user is using it
+			// while the interpreter is running
 			if(!current_thread.name.equals("default"))
 				current_thread.input.setautoTerminate(true);
 			current_thread = threads.get(state.stack.pop());
@@ -413,7 +413,7 @@ public class Interpreter {
 			int here = HERE;
 			while(here != -1){
 				String word_name = read_string(here);
-				output(here + " " + word_name + " ", id);
+				output("\t" + word_name + " ", id);
 				
 				//move to next word in linked list
 				here = memory.get(here-1);
@@ -457,11 +457,10 @@ public class Interpreter {
 			String setBoldText = "";
 			output(
 					String.format(
-							"%d %s %s %d ",
+							"[%d %s] %s | ",
 							word_address,
 							setBoldText + word_name + setPlainText,
-							immediate==1?"immdt":"     ",
-							first_op
+							immediate==1?"immdt":"     "
 							),
 					id);
 			
@@ -756,9 +755,9 @@ public class Interpreter {
 				"pies @ .",
 				
 				": go begin 42 . 1500 wait again ;",
-				": deg>rad 0.01745 *F ;",
+				": deg>rad 0.01745 *F ;"
 
-				": ship native -> ship ;",
+				/*": ship native -> ship ;",
 				": x ship -> x ;",
 				": setx ship set x ;",
 				": +x x +F setx ;",
@@ -767,8 +766,10 @@ public class Interpreter {
 				": setrot ship set rot ;",
 				": +rot deg>rad rot +F setrot ;",
 
-				": forward 0.01. ship -> forward ;"
-
+				": forward 0.5 ship -> forward ;",
+				": tick 10. +rot forward ;",
+				": loopy begin tick 100 wait again ;"
+*/
 		);
 		/*		"native -> age 2 + .",
 				"7 native set age",

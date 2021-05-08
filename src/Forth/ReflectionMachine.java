@@ -83,7 +83,7 @@ public class ReflectionMachine {
 	public static void dot_operator(Object actor, String fieldOrClass, State state){ try{
 		// get actual type of attribute
 		Object attribute = ReflectionMachine.getByString(actor, fieldOrClass);
-		
+
 		if (attribute == null) {
 			state.origin.outputln("field or class " + fieldOrClass + " not found as attribute", state.id);
 		}
@@ -95,16 +95,25 @@ public class ReflectionMachine {
 			// get parameters
 			Object[] params = new Object[themethod.getParameterTypes().length];
 			
-			for(int i=0; i<params.length;i++){
+			for(int i=0; i<params.length;i++) {
+				Class theType = themethod.getParameterTypes()[i];
+
 				int stackElem = state.stack.pop();
-				// stack has object address or integer?
-				params[i] = (stackElem < 0)? state.objects.get(-stackElem-1):stackElem;
+
+				if (theType == int.class || theType == Integer.class)
+					params[i] = stackElem;
+				else if (theType == float.class || theType == Float.class) {
+					params[i] = Float.intBitsToFloat(stackElem);
+				}else //is object
+					params[i] = state.objects.get(-stackElem-1);
 			}
 			// invoke
 			Object returnval = themethod.invoke(actor, params);
 			
 			// manage return as object or integer
-			if(returnval instanceof Integer){
+			if(returnval == null){
+
+			}else if(returnval instanceof Integer){
 				state.stack.add((int)returnval);
 			} else {// is object
 				state.objects.add(returnval);

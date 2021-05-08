@@ -110,6 +110,7 @@ public class State {
 			 	val = Integer.parseInt(next_word);
 			else
 				val = Float.floatToIntBits(Float.parseFloat(next_word));
+
 			if(immediate.get()) {
 				stack.add(val);
 			}else{
@@ -117,7 +118,8 @@ public class State {
 				memory.add(val);
 			}
 			return;
-		}catch(NumberFormatException ignored){}
+		}catch(NumberFormatException ignored){
+		}
 		
 		// it is a token, not a number
 		// find address of word identified by token
