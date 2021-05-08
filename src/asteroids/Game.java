@@ -66,7 +66,7 @@ public class Game {
                     }
                 }
 
-                if(Math.random() > 0.997)
+                if(Math.random() > 0.998)
                     asteroids.add(new Asteroid());
 
                 repaint();

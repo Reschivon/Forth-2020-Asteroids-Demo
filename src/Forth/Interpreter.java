@@ -18,7 +18,7 @@ public class Interpreter {
 	// memory. Double array
 	List<Integer> memory = new ArrayList<>();
 	
-	// starting game.point for native java methods and fields
+	// starting point for native java methods and fields
 	Object nativeRoot = null;
 	public void setNativeRoot(Object o){nativeRoot = o;}
 	// link up names of primitives to their java code
@@ -100,7 +100,6 @@ public class Interpreter {
 	List<String> string_pool = new ArrayList<>();
 	
 	{
-		
 		// Reflection words
 		declarePrimitive( "set" , state -> {
 			if(state.immediate.get()) {
@@ -422,7 +421,7 @@ public class Interpreter {
 	}
 	
 	/**
-	 * Scans the memory and prints each word, in order of
+	 * Scans the memory and prints a word, in order of
 	 * declaration, along with its definition
 	 * Ignores other non-word data, like variable values
 	 * Should only be used for debugging; assumptions made

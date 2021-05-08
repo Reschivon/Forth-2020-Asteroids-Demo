@@ -135,7 +135,7 @@ public class ReflectionMachine {
 			}
 		}
 	}catch(Exception e){
-		state.origin.outputln("Something went wrong, you're on your own", state.id);
+		state.origin.outputln("Method parameters not found", state.id);
 	}}
 	
 	public static void new_operator(String classname, State state) throws IllegalAccessException, InvocationTargetException, InstantiationException {
